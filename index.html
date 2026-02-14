@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moe | Animated Developer Portfolio</title>
+
+<style>
+    :root {
+        --bg1: #1a2a6c;
+        --bg2: #b21f1f;
+        --bg3: #fdbb2d;
+        --card-bg: rgba(15, 15, 30, 0.8);
+        --accent: #ffdd57;
+        --text-main: #ffffff;
+        --text-sub: #cfd8dc;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #00c9ff);
+        background-size: 400% 400%;
+        animation: gradientMove 18s ease infinite;
+    }
+
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .container {
+        max-width: 960px;
+        width: 100%;
+        padding: 30px 18px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        border-radius: 18px;
+        padding: 26px 22px;
+        margin-bottom: 20px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(14px);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.8s ease forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.3s; }
+    .card:nth-child(3) { animation-delay: 0.5s; }
+    .card:nth-child(4) { animation-delay: 0.7s; }
+    .card:nth-child(5) { animation-delay: 0.9s; }
+
+    @keyframes fadeUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    h1, h2 {
+        margin: 0 0 10px 0;
+        text-align: center;
+    }
+
+    h1 span.highlight {
+        background: linear-gradient(90deg, #ffdd57, #ff8a65);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: var(--text-sub);
+        font-size: 0.95rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+
+    .roles {
+        text-align: center;
+        font-size: 0.95rem;
+        color: var(--text-sub);
+    }
+
+    .badge-row {
+        margin-top: 12px;
+        text-align: center;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        font-size: 0.75rem;
+        margin: 3px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-sub);
+    }
+
+    .badge.pulse {
+        border-color: var(--accent);
+        color: var(--accent);
+        animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(255, 221, 87, 0.6); }
+        70% { box-shadow: 0 0 0 16px rgba(255, 221, 87, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 221, 87, 0); }
+    }
+
+    p {
+        color: var(--text-sub);
+        line-height: 1.6;
+        font-size: 0.95rem;
+    }
+
+    .section-title {
+        text-align: left;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .skill-pill {
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: radial-gradient(circle at top left, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
+        font-size: 0.8rem;
+        border: 1px solid rgba(255,255,255,0.12);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .skill-pill::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -40%;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+        transform: skewX(-20deg);
+        animation: shine 3.2s ease-in-out infinite;
+    }
+
+    @keyframes shine {
+        0% { left: -40%; }
+        60% { left: 140%; }
+        100% { left: 140%; }
+    }
+
+    ul {
+        padding-left: 18px;
+        margin: 8px 0 0 0;
+        color: var(--text-sub);
+        font-size: 0.93rem;
+    }
+
+    a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-text {
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--text-sub);
+        margin-top: 6px;
+    }
+
+    .glow {
+        text-shadow: 0 0 8px rgba(255, 221, 87, 0.7);
+    }
+
+    @media (min-width: 720px) {
+        .card {
+            padding: 30px 28px;
+        }
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+    <!-- Hero -->
+    <div class="card">
+        <div class="subtitle">Developer Portfolio</div>
+        <h1>Hi, I'm <span class="highlight">Moe</span> 👋</h1>
+        <p class="roles">
+            Developer • Researcher • System Thinker
+        </p>
+        <div class="badge-row">
+            <span class="badge pulse">Building meaningful digital experiences</span>
+            <span class="badge">Clean code</span>
+            <span class="badge">Structured thinking</span>
+        </div>
+    </div>
+
+    <!-- About -->
+    <div class="card">
+        <h2 class="section-title">🎨 About Me</h2>
+        <p>
+            I am a detail‑oriented developer and researcher who enjoys building clean, reliable, and meaningful digital experiences.
+            I love transforming complex information into simple, structured, and useful tools that support real‑world decisions.
+        </p>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="card">
+        <h2 class="section-title">🚀 Tech Stack</h2>
+        <p>Technologies I work with:</p>
+        <div class="skills">
+            <div class="skill-pill">JavaScript</div>
+            <div class="skill-pill">Python</div>
+            <div class="skill-pill">HTML</div>
+            <div class="skill-pill">CSS</div>
+            <div class="skill-pill">Node.js</div>
+            <div class="skill-pill">React</div>
+            <div class="skill-pill">Bootstrap</div>
+            <div class="skill-pill">Git & GitHub</div>
+            <div class="skill-pill">GitHub Pages</div>
+            <div class="skill-pill">APIs</div>
+            <div class="skill-pill">Data Structuring</div>
+            <div class="skill-pill">Technical Research</div>
+        </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="card">
+        <h2 class="section-title">📌 Featured Projects</h2>
+        <ul>
+            <li>
+                <b>Portfolio Website:</b>
+                <a href="https://moekyawaung-tech.github.io" target="_blank" rel="noopener">
+                    View Live
+                </a>
+            </li>
+            <li>
+                <b>Research Tools & Automation:</b>
+                Scripts for structured data extraction and analysis.
+            </li>
+        </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="card">
+        <h2 class="section-title">📫 Contact</h2>
+        <p>
+            GitHub:
+            <a href="https://github.com/moekyawaung-tech" target="_blank" rel="noopener">
+                github.com/moekyawaung-tech
+            </a><br>
+            Email: <a href="mailto:your-email@example.com">your-email@example.com</a>
+        </p>
+        <p class="footer-text glow">
+            ✨ Building tools that make knowledge clearer and systems more transparent ✨
+        </p>
+    </div>
+
+</div>
+</body>
+</html>
