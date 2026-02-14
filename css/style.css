@@ -1,0 +1,65 @@
+.timeline {
+    border-left: 2px solid rgba(255,255,255,0.3);
+    margin-left: 10px;
+    padding-left: 20px;
+}
+
+.timeline-item {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    left: -28px;
+    top: 4px;
+}
+.skill-bar {
+    margin-bottom: 15px;
+}
+
+.skill-bar span {
+    font-size: 0.9rem;
+}
+
+.bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    margin-top: 5px;
+}
+
+.bar div {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 20px;
+    animation: grow 1.5s ease-out;
+}
+
+@keyframes grow {
+    from { width: 0; }
+}
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
+}
+
+.project-card {
+    background: rgba(255,255,255,0.08);
+    padding: 18px;
+    border-radius: 14px;
+    transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
