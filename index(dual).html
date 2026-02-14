@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moe | Developer Portfolio</title>
+
+<style>
+    :root {
+        --bg1: #1a2a6c;
+        --bg2: #b21f1f;
+        --bg3: #fdbb2d;
+        --card-bg: rgba(15, 15, 30, 0.8);
+        --accent: #ffdd57;
+        --text-main: #ffffff;
+        --text-sub: #cfd8dc;
+    }
+
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #00c9ff);
+        background-size: 400% 400%;
+        animation: gradientMove 18s ease infinite;
+        margin: 0;
+        padding: 0;
+        color: var(--text-main);
+    }
+
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .container {
+        max-width: 960px;
+        margin: auto;
+        padding: 40px 20px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        padding: 28px;
+        border-radius: 18px;
+        margin-bottom: 22px;
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.8s ease forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.3s; }
+    .card:nth-child(3) { animation-delay: 0.5s; }
+    .card:nth-child(4) { animation-delay: 0.7s; }
+    .card:nth-child(5) { animation-delay: 0.9s; }
+
+    @keyframes fadeUp {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1, h2 { text-align: center; margin-top: 0; }
+
+    .highlight {
+        background: linear-gradient(90deg, #ffdd57, #ff8a65);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .lang-switch {
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    .lang-btn {
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        font-size: 0.85rem;
+        margin-left: 6px;
+    }
+
+    .lang-btn.active {
+        background: var(--accent);
+        color: black;
+        font-weight: bold;
+    }
+
+    .skills span {
+        display: inline-block;
+        padding: 7px 12px;
+        margin: 4px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .mm { display: none; } /* Myanmar hidden by default */
+</style>
+
+<script>
+function switchLang(lang) {
+    document.querySelectorAll('.en').forEach(e => e.style.display = lang === 'en' ? 'block' : 'none');
+    document.querySelectorAll('.mm').forEach(e => e.style.display = lang === 'mm' ? 'block' : 'none');
+
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-mm').classList.toggle('active', lang === 'mm');
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="lang-switch">
+        <button id="btn-en" class="lang-btn active" onclick="switchLang('en')">English</button>
+        <button id="btn-mm" class="lang-btn" onclick="switchLang('mm')">မြန်မာ</button>
+    </div>
+
+    <!-- HERO -->
+    <div class="card">
+        <h1 class="en">Hi, I'm <span class="highlight">Moe</span> 👋</h1>
+        <h1 class="mm">ဟယ်လို၊ ကျွန်တော် <span class="highlight">Moe</span> ပါ 👋</h1>
+
+        <p class="en" style="text-align:center;">Developer • Researcher • System Thinker</p>
+        <p class="mm" style="text-align:center;">Developer • Researcher • System Thinker</p>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="card">
+        <h2 class="en">🎨 About Me</h2>
+        <h2 class="mm">🎨 ကိုယ်ရေးအကျဉ်း</h2>
+
+        <p class="en">
+            I am a detail‑oriented developer and researcher who enjoys building clean, reliable, and meaningful digital experiences.
+            I love transforming complex information into simple, structured, and useful tools.
+        </p>
+
+        <p class="mm">
+            ကျွန်တော်က အသေးစိတ်ဂရုစိုက်ပြီး တိကျမှန်ကန်တဲ့ digital experience တွေကို တည်ဆောက်ဖို့နှစ်သက်တဲ့ Developer & Researcher တစ်ယောက်ပါ။
+            ရှုပ်ထွေးတဲ့ knowledge တွေကို ရိုးရှင်းပြီး အသုံးဝင်တဲ့ tool တွေဖြစ်အောင် ပြောင်းလဲပေးဖို့ကို အထူးဝါသနာပါပါတယ်။
+        </p>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="card">
+        <h2 class="en">🚀 Tech Stack</h2>
+        <h2 class="mm">🚀 အသုံးပြုနိုင်သော Technology များ</h2>
+
+        <div class="skills">
+            <span>JavaScript</span>
+            <span>Python</span>
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>Node.js</span>
+            <span>React</span>
+            <span>Bootstrap</span>
+            <span>GitHub Pages</span>
+            <span>APIs</span>
+            <span>Data Structuring</span>
+            <span>Technical Research</span>
+        </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="card">
+        <h2 class="en">📌 Featured Projects</h2>
+        <h2 class="mm">📌 Project များ</h2>
+
+        <ul class="en">
+            <li><b>Portfolio Website:</b> <a href="https://moekyawaung-tech.github.io">View Live</a></li>
+            <li><b>Research Tools & Automation:</b> Data extraction & analysis scripts</li>
+        </ul>
+
+        <ul class="mm">
+            <li><b>Portfolio Website:</b> <a href="https://moekyawaung-tech.github.io">ဝဘ်ဆိုဒ်ကြည့်ရန်</a></li>
+            <li><b>Research Tools & Automation:</b> Data extraction & analysis script များ</li>
+        </ul>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="card">
+        <h2 class="en">📫 Contact</h2>
+        <h2 class="mm">📫 ဆက်သွယ်ရန်</h2>
+
+        <p class="en">
+            GitHub: <a href="https://github.com/moekyawaung-tech">github.com/moekyawaung-tech</a><br>
+            Email: moekyawaung@technologist.com
+        </p>
+
+        <p class="mm">
+            GitHub: <a href="https://github.com/moekyawaung-tech">github.com/moekyawaung-tech</a><br>
+            Email: moekyawaung@technologist.com
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>
