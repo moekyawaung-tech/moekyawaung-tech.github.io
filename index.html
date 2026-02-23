@@ -3,215 +3,1100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moe | Developer Portfolio</title>
-
+<title>Moe Kyaw Aung — Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Saira+Condensed:wght@300;600&family=Noto+Sans+Myanmar:wght@300;700&display=swap" rel="stylesheet">
 <style>
-    :root {
-        --bg1: #1a2a6c;
-        --bg2: #b21f1f;
-        --bg3: #fdbb2d;
-        --card-bg: rgba(15, 15, 30, 0.8);
-        --accent: #ffdd57;
-        --text-main: #ffffff;
-        --text-sub: #cfd8dc;
-    }
+  :root {
+    --gold: #FFD700;
+    --cyan: #00F5FF;
+    --magenta: #FF00CC;
+    --orange: #FF6B00;
+    --violet: #7B2FBE;
+    --deep: #050515;
+    --mid: #0A0A2E;
+  }
 
-    body {
-        font-family: "Segoe UI", sans-serif;
-        background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #00c9ff);
-        background-size: 400% 400%;
-        animation: gradientMove 18s ease infinite;
-        margin: 0;
-        padding: 0;
-        color: var(--text-main);
-    }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    @keyframes gradientMove {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+  html { scroll-behavior: smooth; }
 
-    .container {
-        max-width: 960px;
-        margin: auto;
-        padding: 40px 20px;
-    }
+  body {
+    background: var(--deep);
+    color: #e8e0ff;
+    font-family: 'Saira Condensed', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
 
-    .card {
-        background: var(--card-bg);
-        padding: 28px;
-        border-radius: 18px;
-        margin-bottom: 22px;
-        backdrop-filter: blur(14px);
-        border: 1px solid rgba(255,255,255,0.1);
-        box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeUp 0.8s ease forwards;
-    }
+  /* ─── BAGAN TEMPLES BACKGROUND ─── */
+  #baganCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
 
-    .card:nth-child(1) { animation-delay: 0.1s; }
-    .card:nth-child(2) { animation-delay: 0.3s; }
-    .card:nth-child(3) { animation-delay: 0.5s; }
-    .card:nth-child(4) { animation-delay: 0.7s; }
-    .card:nth-child(5) { animation-delay: 0.9s; }
+  /* ─── CANVAS BACKGROUND ─── */
+  #horseCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
 
-    @keyframes fadeUp {
-        to { opacity: 1; transform: translateY(0); }
-    }
+  /* ─── STAR / DUST OVERLAY ─── */
+  #dustCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
 
-    h1, h2 { text-align: center; margin-top: 0; }
+  /* ─── GRADIENT VIGNETTE ─── */
+  .vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(5,5,21,0.82) 100%);
+    pointer-events: none;
+  }
 
-    .highlight {
-        background: linear-gradient(90deg, #ffdd57, #ff8a65);
-        -webkit-background-clip: text;
-        color: transparent;
-    }
+  /* ─── LANGUAGE TOGGLE ─── */
+  .lang-bar {
+    position: fixed;
+    top: 20px; right: 28px;
+    z-index: 200;
+    display: flex;
+    gap: 6px;
+  }
 
-    .lang-switch {
-        text-align: right;
-        margin-bottom: 10px;
-    }
+  .lang-btn {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(0,245,255,0.4);
+    color: var(--cyan);
+    padding: 6px 16px;
+    font-family: 'Saira Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(8px);
+  }
+  .lang-btn.active, .lang-btn:hover {
+    background: var(--cyan);
+    color: var(--deep);
+    box-shadow: 0 0 18px var(--cyan);
+  }
 
-    .lang-btn {
-        padding: 6px 14px;
-        border-radius: 20px;
-        border: none;
-        cursor: pointer;
-        background: rgba(255,255,255,0.2);
-        color: white;
-        font-size: 0.85rem;
-        margin-left: 6px;
-    }
+  /* ─── MAIN CONTENT ─── */
+  .page {
+    position: relative;
+    z-index: 20;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
 
-    .lang-btn.active {
-        background: var(--accent);
-        color: black;
-        font-weight: bold;
-    }
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 60px;
+  }
 
-    .skills span {
-        display: inline-block;
-        padding: 7px 12px;
-        margin: 4px;
-        border-radius: 20px;
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
-    }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+    animation: fadeUp 1s 0.2s both;
+  }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+  .hero-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.4rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    background: linear-gradient(120deg, var(--gold) 0%, var(--magenta) 40%, var(--cyan) 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    animation: fadeUp 1s 0.4s both;
+    filter: drop-shadow(0 0 30px rgba(255,215,0,0.3));
+  }
 
-    .mm { display: none; } /* Myanmar hidden by default */
+  .hero-name-mm {
+    font-family: 'Noto Sans Myanmar', 'Saira Condensed', sans-serif;
+  }
+
+  .hero-role {
+    margin-top: 18px;
+    font-size: clamp(1rem, 2.2vw, 1.5rem);
+    letter-spacing: 3px;
+    color: rgba(232,224,255,0.6);
+    animation: fadeUp 1s 0.6s both;
+  }
+
+  .hero-scroll {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: fadeUp 1s 1s both;
+    color: rgba(255,255,255,0.35);
+    font-size: 11px;
+    letter-spacing: 4px;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0,245,255,0.6), transparent);
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    margin-top: 90px;
+    animation: fadeUp 0.8s both;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--magenta);
+    box-shadow: 0 0 8px var(--magenta);
+  }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
+    color: var(--gold);
+    margin-bottom: 22px;
+    text-shadow: 0 0 25px rgba(255,215,0,0.4);
+  }
+
+  .section-body {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: rgba(232,224,255,0.8);
+    max-width: 680px;
+  }
+
+  /* ─── TECH STACK ─── */
+  .tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .tech-pill {
+    padding: 8px 18px;
+    border: 1px solid rgba(0,245,255,0.25);
+    background: rgba(0,245,255,0.05);
+    color: var(--cyan);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tech-pill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.12), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.4s;
+  }
+  .tech-pill:hover::after { transform: translateX(100%); }
+  .tech-pill:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 14px rgba(0,245,255,0.35);
+  }
+
+  /* ─── PROJECT CARDS ─── */
+  .project-card {
+    margin-top: 20px;
+    padding: 28px;
+    border: 1px solid rgba(255,107,0,0.25);
+    background: rgba(255,107,0,0.04);
+    position: relative;
+    transition: all 0.4s;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--orange), var(--magenta));
+  }
+  .project-card:hover {
+    border-color: rgba(255,107,0,0.6);
+    background: rgba(255,107,0,0.08);
+    transform: translateX(6px);
+    box-shadow: -6px 0 30px rgba(255,107,0,0.2);
+  }
+  .project-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1rem;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .project-desc {
+    font-size: 0.95rem;
+    color: rgba(232,224,255,0.7);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .project-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,215,0,0.3);
+    transition: all 0.3s;
+  }
+  .project-link:hover {
+    color: #fff;
+    border-color: #fff;
+    text-shadow: 0 0 10px var(--gold);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 1rem;
+    color: rgba(232,224,255,0.75);
+  }
+  .contact-item a {
+    color: var(--cyan);
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+  }
+  .contact-item a:hover {
+    color: #fff;
+    text-shadow: 0 0 14px var(--cyan);
+  }
+  .contact-dot {
+    width: 8px; height: 8px;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+    flex-shrink: 0;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    margin-top: 100px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.25);
+  }
+  .footer span { color: var(--magenta); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── LANGUAGE VISIBILITY ─── */
+  .en, .mm { transition: opacity 0.4s; }
+  body.lang-mm .en { display: none; }
+  body.lang-en .mm { display: none; }
+
+  /* ─── HORSE DEPTH LAYERS ─── */
+  .depth-line {
+    position: fixed;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.15), transparent);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* Glowing orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(80px);
+    animation: orbFloat 8s ease-in-out infinite alternate;
+  }
+  .orb1 { width: 400px; height: 400px; background: rgba(123,47,190,0.25); top: -100px; left: -100px; }
+  .orb2 { width: 300px; height: 300px; background: rgba(255,0,204,0.15); bottom: 100px; right: -80px; animation-delay: 3s; }
+  .orb3 { width: 250px; height: 250px; background: rgba(0,245,255,0.1); top: 50%; left: 50%; animation-delay: 5s; }
+  @keyframes orbFloat {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(30px, 40px) scale(1.15); }
+  }
 </style>
+</head>
+<body class="lang-en">
 
-<script>
-function switchLang(lang) {
-    document.querySelectorAll('.en').forEach(e => e.style.display = lang === 'en' ? 'block' : 'none');
-    document.querySelectorAll('.mm').forEach(e => e.style.display = lang === 'mm' ? 'block' : 'none');
+<!-- Orbs -->
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
 
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-    document.getElementById('btn-mm').classList.toggle('active', lang === 'mm');
-}
-</script>
+<!-- Bagan Temples Canvas -->
+<canvas id="baganCanvas"></canvas>
+<!-- Horse Canvas -->
+<canvas id="horseCanvas"></canvas>
+<!-- Dust / star particles -->
+<canvas id="dustCanvas"></canvas>
 
-<meta name="description" content="Moe — Developer & Researcher Portfolio. Clean, animated, bilingual professional profile.">
-<meta property="og:title" content="Moe — Developer Portfolio">
-<meta property="og:description" content="Animated bilingual portfolio for a developer & researcher.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://moekyawaung-tech.github.io/">
-<body>
+<!-- Vignette -->
+<div class="vignette"></div>
 
-<div class="container">
+<!-- Depth Lines (perspective rails) -->
+<div class="depth-line" style="top:68%"></div>
+<div class="depth-line" style="top:72%"></div>
 
-    <div class="lang-switch">
-        <button id="btn-en" class="lang-btn active" onclick="switchLang('en')">English</button>
-        <button id="btn-mm" class="lang-btn" onclick="switchLang('mm')">မြန်မာ</button>
-    </div>
-
-    <!-- HERO -->
-    <div class="card">
-        <h1 class="en">Hi, I'm <span class="highlight">Moe Kyaw Aung</span> 👋</h1>
-        <h1 class="mm">ဟယ်လို၊   ကျွန်တော် <span class="highlight"> မိုးကျော်အောင်</span> ပါ 👋</h1>
-
-        <p class="en" style="text-align:center;">Developer • Researcher • System Thinker</p>
-        <p class="mm" style="text-align:center;">Developer • Researcher • System Thinker</p>
-    </div>
-
-    <!-- ABOUT -->
-    <div class="card">
-        <h2 class="en">🎨 About Me</h2>
-        <h2 class="mm">🎨 ကိုယ်ရေးအကျဉ်း</h2>
-
-        <p class="en">
-            I am a detail‑oriented developer and researcher who enjoys building clean, reliable, and meaningful digital experiences.
-            I love transforming complex information into simple, structured, and useful tools.
-        </p>
-
-        <p class="mm">
-            ကျွန်တော်က အသေးစိတ်ဂရုစိုက်ပြီး တိကျမှန်ကန်တဲ့ digital experience တွေကို တည်ဆောက်ဖို့နှစ်သက်တဲ့ Developer & Researcher တစ်ယောက်ပါ။
-            ရှုပ်ထွေးတဲ့ knowledge တွေကို ရိုးရှင်းပြီး အသုံးဝင်တဲ့ tool တွေဖြစ်အောင် ပြောင်းလဲပေးဖို့ကို အထူးဝါသနာပါပါတယ်။
-        </p>
-    </div>
-
-    <!-- TECH STACK -->
-    <div class="card">
-        <h2 class="en">🚀 Tech Stack</h2>
-        <h2 class="mm">🚀 အသုံးပြုနိုင်သော Technology များ</h2>
-
-        <div class="skills">
-            <span>JavaScript</span>
-            <span>Python</span>
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>Node.js</span>
-            <span>React</span>
-            <span>Bootstrap</span>
-            <span>GitHub Pages</span>
-            <span>APIs</span>
-            <span>Data Structuring</span>
-            <span>Technical Research</span>
-        </div>
-    </div>
-
-    <!-- PROJECTS -->
-    <div class="card">
-        <h2 class="en">📌 Featured Projects</h2>
-        <h2 class="mm">📌 Project များ</h2>
-
-        <ul class="en">
-            <li><b>Portfolio Website:</b> <a href="https://moekyawaung-tech.github.io">View Live</a></li>
-            <li><b>Research Tools & Automation:</b> Data extraction & analysis scripts</li>
-        </ul>
-
-        <ul class="mm">
-            <li><b>Portfolio Website:</b> <a href="https://moekyawaung-tech.github.io">ဝဘ်ဆိုဒ်ကြည့်ရန်</a></li>
-            <li><b>Research Tools & Automation:</b> Data extraction & analysis script များ</li>
-        </ul>
-    </div>
-
-    <!-- CONTACT -->
-    <div class="card">
-        <h2 class="en">📫 Contact</h2>
-        <h2 class="mm">📫 ဆက်သွယ်ရန်</h2>
-
-        <p class="en">
-            GitHub: <a href="https://github.com/moekyawaung-tech">github.com/moekyawaung-tech</a><br>
-            Email: moekyawaung@technologist.com
-        </p>
-
-        <p class="mm">
-            GitHub: <a href="https://github.com/moekyawaung-tech">github.com/moekyawaung-tech</a><br>
-            Email: moekyawaung@technologist.com
-        </p>
- <div class="card" style="text-align:center;">
-    <p>© 2026 Moe — Developer & Researcher</p>
-    <p class="en">Built with passion, precision, and purpose.</p>
-    <p class="mm">Passion၊ Precision နှင့် Purpose ဖြင့် တည်ဆောက်ထားသည်။</p>
- </div>   </div>
-
+<!-- Language Toggle -->
+<div class="lang-bar">
+  <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btnMM" onclick="setLang('mm')">မြန်မာ</button>
 </div>
 
+<!-- ════════════ CONTENT ════════════ -->
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow en">Developer Portfolio — 2026</p>
+    <p class="hero-eyebrow mm" style="font-family:'Noto Sans Myanmar',sans-serif">Developer Portfolio — ၂၀၂၆</p>
+
+    <h1 class="hero-name en">Moe Kyaw Aung</h1>
+    <h1 class="hero-name hero-name-mm mm">မိုးကျော်အောင်</h1>
+
+    <p class="hero-role en">Developer &nbsp;•&nbsp; Researcher &nbsp;•&nbsp; System Thinker</p>
+    <p class="hero-role mm" style="font-family:'Noto Sans Myanmar',sans-serif">Developer • Researcher • System Thinker</p>
+
+    <div class="hero-scroll en">Scroll to explore</div>
+    <div class="hero-scroll mm" style="font-family:'Noto Sans Myanmar',sans-serif">အောက်သို့ ဆင်းရန်</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section">
+    <p class="section-label en">About</p>
+    <p class="section-label mm" style="font-family:'Noto Sans Myanmar',sans-serif">ကိုယ်ရေး</p>
+    <h2 class="section-title en">About Me</h2>
+    <h2 class="section-title mm" style="font-family:'Noto Sans Myanmar',sans-serif">ကိုယ်ရေးအကျဉ်း</h2>
+    <p class="section-body en">I am a detail-oriented developer and researcher who enjoys building clean, reliable, and meaningful digital experiences. I love transforming complex information into simple, structured, and useful tools.</p>
+    <p class="section-body mm" style="font-family:'Noto Sans Myanmar',sans-serif">ကျွန်တော်က အသေးစိတ်ဂရုစိုက်ပြီး တိကျမှန်ကန်တဲ့ digital experience တွေကို တည်ဆောက်ဖို့ နှစ်သက်တဲ့ Developer & Researcher တစ်ယောက်ပါ။ ရှုပ်ထွေးတဲ့ knowledge တွေကို ရိုးရှင်းပြီး အသုံးဝင်တဲ့ tool တွေဖြစ်အောင် ပြောင်းလဲပေးဖို့ကို အထူးဝါသနာပါပါတယ်။</p>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="section">
+    <p class="section-label en">Skills</p>
+    <p class="section-label mm" style="font-family:'Noto Sans Myanmar',sans-serif">ကျွမ်းကျင်မှုများ</p>
+    <h2 class="section-title en">Tech Stack</h2>
+    <h2 class="section-title mm" style="font-family:'Noto Sans Myanmar',sans-serif">အသုံးပြုနိုင်သော Technology များ</h2>
+    <div class="tech-grid">
+      <div class="tech-pill">JavaScript</div>
+      <div class="tech-pill">Python</div>
+      <div class="tech-pill">HTML</div>
+      <div class="tech-pill">CSS</div>
+      <div class="tech-pill">Node.js</div>
+      <div class="tech-pill">React</div>
+      <div class="tech-pill">Bootstrap</div>
+      <div class="tech-pill">GitHub Pages</div>
+      <div class="tech-pill">APIs</div>
+      <div class="tech-pill">Data Structuring</div>
+      <div class="tech-pill">Technical Research</div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section">
+    <p class="section-label en">Work</p>
+    <p class="section-label mm" style="font-family:'Noto Sans Myanmar',sans-serif">လုပ်ငန်းများ</p>
+    <h2 class="section-title en">Featured Projects</h2>
+    <h2 class="section-title mm" style="font-family:'Noto Sans Myanmar',sans-serif">Project များ</h2>
+
+    <div class="project-card">
+      <p class="project-title en">Portfolio Website</p>
+      <p class="project-title mm" style="font-family:'Noto Sans Myanmar',sans-serif">Portfolio Website</p>
+      <p class="project-desc en">A personal developer portfolio showcasing projects, research, and technical expertise — built with precision and purpose.</p>
+      <p class="project-desc mm" style="font-family:'Noto Sans Myanmar',sans-serif">Projects, research နှင့် technical expertise တွေကို ဖော်ပြသော personal developer portfolio တစ်ခုဖြစ်ပြီး တိကျမှန်ကန်မှုနှင့် ရည်ရွယ်ချက်ဖြင့် တည်ဆောက်ထားသည်။</p>
+      <a href="https://moekyawaung-tech.github.io" target="_blank" class="project-link en">View Live →</a>
+      <a href="https://moekyawaung-tech.github.io" target="_blank" class="project-link mm" style="font-family:'Noto Sans Myanmar',sans-serif">ဝဘ်ဆိုဒ်ကြည့်ရန် →</a>
+    </div>
+
+    <div class="project-card">
+      <p class="project-title en">Research Tools & Automation</p>
+      <p class="project-title mm" style="font-family:'Noto Sans Myanmar',sans-serif">Research Tools & Automation</p>
+      <p class="project-desc en">Data extraction and analysis scripts designed to streamline complex research workflows and transform raw data into structured insights.</p>
+      <p class="project-desc mm" style="font-family:'Noto Sans Myanmar',sans-serif">ရှုပ်ထွေးသော research workflows တွေကို ချောမွေ့စေပြီး raw data ကို structured insights ဖြစ်အောင် ပြောင်းလဲပေးသော data extraction နှင့် analysis scripts များ။</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section">
+    <p class="section-label en">Connect</p>
+    <p class="section-label mm" style="font-family:'Noto Sans Myanmar',sans-serif">ဆက်သွယ်ရန်</p>
+    <h2 class="section-title en">Contact</h2>
+    <h2 class="section-title mm" style="font-family:'Noto Sans Myanmar',sans-serif">ဆက်သွယ်ရန်</h2>
+    <div class="contact-links">
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <span>GitHub: <a href="https://github.com/moekyawaung-tech" target="_blank">github.com/moekyawaung-tech</a></span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-dot"></div>
+        <span>Email: <a href="mailto:moekyawaung@technologist.com">moekyawaung@technologist.com</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 Moe Kyaw Aung — Developer & Researcher</p>
+    <p style="margin-top:8px" class="en">Built with <span>passion</span>, precision, and purpose.</p>
+    <p style="margin-top:8px" class="mm" style="font-family:'Noto Sans Myanmar',sans-serif">Passion၊ Precision နှင့် <span>Purpose</span> ဖြင့် တည်ဆောက်ထားသည်။</p>
+  </footer>
+</div>
+
+<script>
+// ══════════════════════════════════
+//  BAGAN TEMPLES CANVAS
+// ══════════════════════════════════
+const bc = document.getElementById('baganCanvas');
+const bctx = bc.getContext('2d');
+
+function resizeBagan() { bc.width = window.innerWidth; bc.height = window.innerHeight; }
+resizeBagan();
+window.addEventListener('resize', resizeBagan);
+
+// ─── Horizon & sky gradient (dawn-over-Bagan palette)
+function drawSky() {
+  const h = bc.height;
+  const w = bc.width;
+  // Deep night → twilight amber at horizon
+  const sky = bctx.createLinearGradient(0, 0, 0, h * 0.62);
+  sky.addColorStop(0,    'rgba(2,2,18,1)');
+  sky.addColorStop(0.5,  'rgba(6,4,28,1)');
+  sky.addColorStop(0.75, 'rgba(28,10,40,1)');
+  sky.addColorStop(0.88, 'rgba(60,20,10,0.9)');
+  sky.addColorStop(1,    'rgba(90,35,5,0.85)');
+  bctx.fillStyle = sky;
+  bctx.fillRect(0, 0, w, h * 0.62);
+
+  // Horizon glow (amber-rose sunrise behind temples)
+  const hY = h * 0.52;
+  const hGlow = bctx.createRadialGradient(w * 0.5, hY, 0, w * 0.5, hY, w * 0.65);
+  hGlow.addColorStop(0,   'rgba(255,160,30,0.28)');
+  hGlow.addColorStop(0.3, 'rgba(220,80,10,0.14)');
+  hGlow.addColorStop(0.6, 'rgba(180,30,80,0.06)');
+  hGlow.addColorStop(1,   'transparent');
+  bctx.fillStyle = hGlow;
+  bctx.fillRect(0, 0, w, h * 0.8);
+
+  // Stars (static dots)
+  bctx.save();
+  for (let i = 0; i < 200; i++) {
+    const sx = (Math.sin(i * 7.3 + 1) * 0.5 + 0.5) * w;
+    const sy = (Math.sin(i * 3.7 + 2) * 0.5 + 0.5) * h * 0.48;
+    const sr = 0.5 + Math.sin(i * 11.1) * 0.4;
+    const brightness = 0.3 + Math.sin(i * 5.1) * 0.3;
+    bctx.globalAlpha = brightness;
+    bctx.fillStyle = '#fff';
+    bctx.beginPath();
+    bctx.arc(sx, sy, sr, 0, Math.PI * 2);
+    bctx.fill();
+  }
+  bctx.restore();
+}
+
+// ─── Draw a Bagan-style Stupa / Zedi (pointed bell-shape)
+function drawZedi(bctx, x, baseY, w, h, glowColor, alpha) {
+  bctx.save();
+  bctx.globalAlpha = alpha;
+
+  // Glow halo behind
+  const glow = bctx.createRadialGradient(x, baseY - h * 0.5, 0, x, baseY - h * 0.4, w * 1.2);
+  glow.addColorStop(0,   glowColor.replace('1)', '0.18)'));
+  glow.addColorStop(0.4, glowColor.replace('1)', '0.07)'));
+  glow.addColorStop(1,   'transparent');
+  bctx.fillStyle = glow;
+  bctx.beginPath();
+  bctx.ellipse(x, baseY - h * 0.35, w * 1.3, h * 0.8, 0, 0, Math.PI * 2);
+  bctx.fill();
+
+  bctx.shadowColor = glowColor.replace('1)', '0.5)');
+  bctx.shadowBlur = 18;
+
+  // Base platform tiers
+  const tiers = 3;
+  for (let t = 0; t < tiers; t++) {
+    const tw = w * (1 - t * 0.18);
+    const th = h * 0.055;
+    const ty = baseY - t * th * 1.1;
+    bctx.fillStyle = 'rgba(15,8,4,0.92)';
+    bctx.fillRect(x - tw / 2, ty - th, tw, th);
+    // Rim highlight
+    bctx.fillStyle = glowColor.replace('1)', '0.25)');
+    bctx.fillRect(x - tw / 2, ty - th, tw, 1.5);
+  }
+  const tierH = tiers * h * 0.055 * 1.1;
+
+  // Bell body (main stupa dome)
+  const bellW = w * 0.55;
+  const bellH = h * 0.32;
+  const bellY = baseY - tierH;
+  bctx.beginPath();
+  bctx.moveTo(x - bellW / 2, bellY);
+  bctx.bezierCurveTo(
+    x - bellW * 0.65, bellY - bellH * 0.5,
+    x - bellW * 0.2,  bellY - bellH * 0.95,
+    x,                bellY - bellH
+  );
+  bctx.bezierCurveTo(
+    x + bellW * 0.2,  bellY - bellH * 0.95,
+    x + bellW * 0.65, bellY - bellH * 0.5,
+    x + bellW / 2,    bellY
+  );
+  bctx.closePath();
+  bctx.fillStyle = 'rgba(12,6,2,0.95)';
+  bctx.fill();
+  // Bell edge glow
+  bctx.strokeStyle = glowColor.replace('1)', '0.3)');
+  bctx.lineWidth = 1;
+  bctx.stroke();
+
+  // Neck ring
+  const neckY = bellY - bellH - h * 0.01;
+  bctx.fillStyle = 'rgba(10,5,2,0.95)';
+  bctx.fillRect(x - bellW * 0.1, neckY - h * 0.06, bellW * 0.2, h * 0.06);
+  bctx.strokeStyle = glowColor.replace('1)', '0.3)');
+  bctx.lineWidth = 1;
+  bctx.strokeRect(x - bellW * 0.1, neckY - h * 0.06, bellW * 0.2, h * 0.06);
+
+  // Spire (hti)
+  const spireBaseY = neckY - h * 0.06;
+  const spireH = h * 0.38;
+  bctx.beginPath();
+  bctx.moveTo(x - bellW * 0.07, spireBaseY);
+  bctx.lineTo(x + bellW * 0.07, spireBaseY);
+  bctx.lineTo(x,                spireBaseY - spireH);
+  bctx.closePath();
+  bctx.fillStyle = 'rgba(8,4,1,0.97)';
+  bctx.fill();
+  bctx.strokeStyle = glowColor.replace('1)', '0.45)');
+  bctx.lineWidth = 1;
+  bctx.stroke();
+
+  // Hti tip glow
+  bctx.beginPath();
+  bctx.arc(x, spireBaseY - spireH, 3, 0, Math.PI * 2);
+  bctx.fillStyle = glowColor.replace('1)', '0.9)');
+  bctx.shadowBlur = 12;
+  bctx.fill();
+
+  bctx.restore();
+}
+
+// ─── Draw a Bagan-style Temple (rectangular, Ananda / Thatbyinnyu style)
+function drawTemple(bctx, x, baseY, w, h, glowColor, alpha) {
+  bctx.save();
+  bctx.globalAlpha = alpha;
+
+  const glow = bctx.createRadialGradient(x, baseY - h * 0.5, 0, x, baseY - h * 0.4, w * 1.0);
+  glow.addColorStop(0,   glowColor.replace('1)', '0.12)'));
+  glow.addColorStop(1,   'transparent');
+  bctx.fillStyle = glow;
+  bctx.beginPath();
+  bctx.ellipse(x, baseY - h * 0.3, w * 1.2, h * 0.7, 0, 0, Math.PI * 2);
+  bctx.fill();
+
+  bctx.shadowColor = glowColor.replace('1)', '0.4)');
+  bctx.shadowBlur = 14;
+
+  // Main base body
+  const bodyW = w;
+  const bodyH = h * 0.45;
+  bctx.fillStyle = 'rgba(10,5,2,0.96)';
+  bctx.fillRect(x - bodyW / 2, baseY - bodyH, bodyW, bodyH);
+
+  // Cornice details (horizontal bands)
+  for (let b = 1; b <= 3; b++) {
+    const by = baseY - bodyH * (b / 3.5);
+    bctx.fillStyle = glowColor.replace('1)', '0.1)');
+    bctx.fillRect(x - bodyW / 2, by - 2, bodyW, 2);
+  }
+
+  // Receding terraces (stepped pyramid section)
+  const steps = 4;
+  let curW = bodyW * 0.85;
+  let curY = baseY - bodyH;
+  const stepH = h * 0.07;
+  for (let s = 0; s < steps; s++) {
+    bctx.fillStyle = 'rgba(10,5,2,0.95)';
+    bctx.fillRect(x - curW / 2, curY - stepH, curW, stepH);
+    // Step highlight
+    bctx.fillStyle = glowColor.replace('1)', '0.18)');
+    bctx.fillRect(x - curW / 2, curY - stepH, curW, 1.5);
+    curW *= 0.76;
+    curY -= stepH;
+  }
+
+  // Central spire on top
+  const sW = curW * 0.55;
+  const sH = h * 0.28;
+  bctx.beginPath();
+  bctx.moveTo(x - sW / 2, curY);
+  bctx.lineTo(x + sW / 2, curY);
+  bctx.lineTo(x + sW * 0.15, curY - sH * 0.55);
+  bctx.lineTo(x, curY - sH);
+  bctx.lineTo(x - sW * 0.15, curY - sH * 0.55);
+  bctx.closePath();
+  bctx.fillStyle = 'rgba(8,4,1,0.97)';
+  bctx.fill();
+  bctx.strokeStyle = glowColor.replace('1)', '0.4)');
+  bctx.lineWidth = 1;
+  bctx.stroke();
+
+  // Tip glow
+  bctx.beginPath();
+  bctx.arc(x, curY - sH, 2.5, 0, Math.PI * 2);
+  bctx.fillStyle = glowColor.replace('1)', '0.9)');
+  bctx.shadowBlur = 10;
+  bctx.fill();
+
+  bctx.restore();
+}
+
+// ─── Layout: place many temples across the horizon
+function buildBaganScene(w, h) {
+  const horizonY = h * 0.54;
+  const scene = [];
+  // Far layer (tiny, faint)
+  const far = [
+    {t:'z', x:0.08, s:0.28, hf:0.18, glow:'rgba(255,180,80,1)'},
+    {t:'t', x:0.16, s:0.22, hf:0.14, glow:'rgba(255,140,60,1)'},
+    {t:'z', x:0.25, s:0.30, hf:0.20, glow:'rgba(255,160,50,1)'},
+    {t:'t', x:0.33, s:0.20, hf:0.13, glow:'rgba(255,120,40,1)'},
+    {t:'z', x:0.42, s:0.26, hf:0.17, glow:'rgba(255,170,70,1)'},
+    {t:'t', x:0.50, s:0.24, hf:0.15, glow:'rgba(255,140,50,1)'},
+    {t:'z', x:0.58, s:0.32, hf:0.21, glow:'rgba(255,180,60,1)'},
+    {t:'t', x:0.67, s:0.21, hf:0.13, glow:'rgba(255,130,40,1)'},
+    {t:'z', x:0.75, s:0.27, hf:0.18, glow:'rgba(255,160,70,1)'},
+    {t:'t', x:0.84, s:0.23, hf:0.14, glow:'rgba(255,150,50,1)'},
+    {t:'z', x:0.92, s:0.29, hf:0.19, glow:'rgba(255,170,60,1)'},
+  ];
+  // Mid layer (medium)
+  const mid = [
+    {t:'t', x:0.04, s:0.42, hf:0.26, glow:'rgba(255,190,80,1)'},
+    {t:'z', x:0.14, s:0.50, hf:0.32, glow:'rgba(255,150,50,1)'},
+    {t:'t', x:0.23, s:0.38, hf:0.24, glow:'rgba(255,170,60,1)'},
+    {t:'z', x:0.36, s:0.55, hf:0.36, glow:'rgba(255,200,80,1)'},
+    {t:'t', x:0.47, s:0.44, hf:0.28, glow:'rgba(255,160,55,1)'},
+    {t:'z', x:0.60, s:0.52, hf:0.34, glow:'rgba(255,185,70,1)'},
+    {t:'t', x:0.71, s:0.40, hf:0.25, glow:'rgba(255,155,50,1)'},
+    {t:'z', x:0.82, s:0.48, hf:0.31, glow:'rgba(255,175,65,1)'},
+    {t:'t', x:0.94, s:0.36, hf:0.23, glow:'rgba(255,165,55,1)'},
+  ];
+  // Near layer (larger, bold)
+  const near = [
+    {t:'t', x:0.10, s:0.70, hf:0.42, glow:'rgba(255,200,90,1)'},
+    {t:'z', x:0.30, s:0.80, hf:0.50, glow:'rgba(255,180,70,1)'},
+    {t:'t', x:0.55, s:0.75, hf:0.46, glow:'rgba(255,210,80,1)'},
+    {t:'z', x:0.78, s:0.85, hf:0.52, glow:'rgba(255,190,75,1)'},
+  ];
+
+  for (const d of far) {
+    scene.push({...d, baseY: horizonY - h * 0.01, layer: 0, alpha: 0.35});
+  }
+  for (const d of mid) {
+    scene.push({...d, baseY: horizonY + h * 0.015, layer: 1, alpha: 0.60});
+  }
+  for (const d of near) {
+    scene.push({...d, baseY: horizonY + h * 0.04, layer: 2, alpha: 0.85});
+  }
+
+  return scene.map(d => ({
+    ...d,
+    px: d.x * w,
+    pw: w * d.s * 0.14,
+    ph: h * d.hf,
+  }));
+}
+
+let baganScene = [];
+let baganShimmer = 0;
+
+function drawBagan(ts) {
+  const w = bc.width, h = bc.height;
+  bctx.clearRect(0, 0, w, h);
+
+  baganShimmer = ts * 0.0004;
+
+  drawSky();
+
+  // Ground plane (dark earth)
+  const groundY = h * 0.52;
+  const ground = bctx.createLinearGradient(0, groundY, 0, h);
+  ground.addColorStop(0, 'rgba(20,8,3,0.7)');
+  ground.addColorStop(0.5, 'rgba(8,3,1,0.9)');
+  ground.addColorStop(1, 'rgba(3,1,0,1)');
+  bctx.fillStyle = ground;
+  bctx.fillRect(0, groundY, w, h - groundY);
+
+  // Rebuild scene on resize
+  if (baganScene.length === 0 || Math.abs(baganScene[0]?.sceneW - w) > 50) {
+    baganScene = buildBaganScene(w, h);
+    baganScene.forEach(d => d.sceneW = w);
+  }
+
+  // Draw far → near (already sorted by layer in buildBaganScene)
+  for (const d of baganScene) {
+    // Subtle shimmer on tips
+    const shimAlpha = d.alpha + Math.sin(baganShimmer * 2.1 + d.px * 0.01) * 0.04;
+    if (d.t === 'z') {
+      drawZedi(bctx, d.px, d.baseY, d.pw, d.ph, d.glow, shimAlpha);
+    } else {
+      drawTemple(bctx, d.px, d.baseY, d.pw, d.ph, d.glow, shimAlpha);
+    }
+  }
+
+  // Atmospheric haze layer (blends temples into distance)
+  const hazeY = h * 0.38;
+  const haze = bctx.createLinearGradient(0, hazeY, 0, h * 0.58);
+  haze.addColorStop(0, 'rgba(5,3,15,0)');
+  haze.addColorStop(0.5, 'rgba(30,12,5,0.22)');
+  haze.addColorStop(1, 'rgba(5,3,15,0)');
+  bctx.fillStyle = haze;
+  bctx.fillRect(0, hazeY, w, h * 0.25);
+
+  requestAnimationFrame(drawBagan);
+}
+requestAnimationFrame(drawBagan);
+
+
+function setLang(l) {
+  document.body.className = 'lang-' + l;
+  document.getElementById('btnEN').classList.toggle('active', l === 'en');
+  document.getElementById('btnMM').classList.toggle('active', l === 'mm');
+}
+
+// ══════════════════════════════════
+//  HORSE CANVAS — COLORFUL 4D RUNNING HORSES
+// ══════════════════════════════════
+const canvas = document.getElementById('horseCanvas');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Horse color palettes
+const PALETTES = [
+  ['#FF6B00','#FFD700'],  // orange-gold
+  ['#FF00CC','#7B2FBE'],  // magenta-violet
+  ['#00F5FF','#0080FF'],  // cyan-blue
+  ['#00FF88','#00F5FF'],  // green-cyan
+  ['#FF4500','#FF00CC'],  // red-magenta
+  ['#FFD700','#FF6B00'],  // gold-orange
+  ['#BF5FFF','#FF00CC'],  // purple-magenta
+];
+
+// ─── Simple stick-figure horse using bezier curves
+// A horse is drawn as a series of body parts using 2D canvas
+// We animate a gallop cycle with 6 frames
+
+function drawHorse(ctx, x, y, scale, frame, colors, alpha, perspective) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(x, y);
+  ctx.scale(scale * perspective, scale * perspective);
+
+  const t = frame / 6; // 0..1 gallop phase
+  const gallop = Math.sin(t * Math.PI * 2);
+  const gallop2 = Math.sin(t * Math.PI * 2 + Math.PI);
+
+  const [c1, c2] = colors;
+
+  // Glow
+  ctx.shadowColor = c1;
+  ctx.shadowBlur = 18 / perspective;
+
+  // Body
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 38, 20, 0.15, 0, Math.PI * 2);
+  const bodyGrad = ctx.createLinearGradient(-38, -20, 38, 20);
+  bodyGrad.addColorStop(0, c1);
+  bodyGrad.addColorStop(1, c2);
+  ctx.fillStyle = bodyGrad;
+  ctx.fill();
+
+  // Neck
+  ctx.beginPath();
+  ctx.moveTo(28, -12);
+  ctx.quadraticCurveTo(40 + gallop * 4, -30, 38 + gallop * 2, -44);
+  ctx.lineWidth = 10;
+  ctx.strokeStyle = c1;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Head
+  ctx.beginPath();
+  ctx.ellipse(38 + gallop * 2, -50, 14, 9, -0.3 + gallop * 0.1, 0, Math.PI * 2);
+  ctx.fillStyle = c2;
+  ctx.fill();
+
+  // Eye
+  ctx.beginPath();
+  ctx.arc(44 + gallop * 2, -53, 2, 0, Math.PI * 2);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+
+  // Ear
+  ctx.beginPath();
+  ctx.moveTo(34 + gallop, -58);
+  ctx.lineTo(31 + gallop, -66);
+  ctx.lineTo(37 + gallop, -62);
+  ctx.closePath();
+  ctx.fillStyle = c1;
+  ctx.fill();
+
+  // Mane (flowing)
+  ctx.beginPath();
+  ctx.moveTo(28, -12);
+  for(let i = 0; i < 5; i++) {
+    const mx = 28 - i * 7;
+    const my = -22 + Math.sin((t * Math.PI * 2) + i * 0.6) * 6;
+    ctx.lineTo(mx, my);
+  }
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = c2;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Tail
+  ctx.beginPath();
+  ctx.moveTo(-38, 4);
+  ctx.quadraticCurveTo(-58, 10 + gallop * 8, -52, 28 + gallop * 10);
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = c2;
+  ctx.stroke();
+
+  // Legs (4 legs with gallop animation)
+  const legAngles = [
+    0.3 + gallop * 0.5,   // front-left
+    0.3 + gallop2 * 0.5,  // front-right
+    -0.2 + gallop2 * 0.5, // back-left
+    -0.2 + gallop * 0.5,  // back-right
+  ];
+  const legX = [18, 24, -20, -14];
+  ctx.lineWidth = 5;
+
+  for(let i = 0; i < 4; i++) {
+    const angle = legAngles[i];
+    const lx = legX[i];
+    const upperLen = 22;
+    const lowerLen = 20;
+    // Upper leg
+    const kx = lx + Math.sin(angle) * upperLen;
+    const ky = 18 + Math.cos(angle) * upperLen;
+    ctx.beginPath();
+    ctx.moveTo(lx, 16);
+    ctx.lineTo(kx, ky);
+    ctx.strokeStyle = c1;
+    ctx.stroke();
+    // Lower leg
+    const angle2 = angle + (i < 2 ? 0.4 : -0.3) + gallop * (i % 2 === 0 ? 0.3 : -0.3);
+    const fx = kx + Math.sin(angle2) * lowerLen;
+    const fy = ky + Math.cos(angle2) * lowerLen;
+    ctx.beginPath();
+    ctx.moveTo(kx, ky);
+    ctx.lineTo(fx, fy);
+    ctx.strokeStyle = c2;
+    ctx.stroke();
+    // Hoof
+    ctx.beginPath();
+    ctx.arc(fx, fy, 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+// ─── Create herd of horses at various depths
+const NUM_HORSES = 12;
+const horses = [];
+
+for (let i = 0; i < NUM_HORSES; i++) {
+  const depth = 0.2 + Math.random() * 0.8; // 0.2 (far) to 1.0 (near)
+  horses.push({
+    x: Math.random() * window.innerWidth * 1.4 - window.innerWidth * 0.2,
+    y: window.innerHeight * (0.45 + depth * 0.35), // lower = closer
+    depth,
+    speed: 1.5 + depth * 3.5,            // faster when closer
+    scale: 0.3 + depth * 0.5,
+    frame: Math.random() * 6,
+    frameSpeed: 0.12 + depth * 0.08,
+    palette: PALETTES[i % PALETTES.length],
+    alpha: 0.25 + depth * 0.55,
+  });
+}
+// Sort by depth so far horses render first
+horses.sort((a, b) => a.depth - b.depth);
+
+let lastTime = 0;
+function animateHorses(ts) {
+  const dt = Math.min((ts - lastTime) / 16, 3);
+  lastTime = ts;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw ground / horizon gradient
+  const horizonY = canvas.height * 0.55;
+  const groundGrad = ctx.createLinearGradient(0, horizonY, 0, canvas.height);
+  groundGrad.addColorStop(0, 'rgba(5,5,21,0)');
+  groundGrad.addColorStop(0.4, 'rgba(10,8,40,0.55)');
+  groundGrad.addColorStop(1, 'rgba(3,2,18,0.9)');
+  ctx.fillStyle = groundGrad;
+  ctx.fillRect(0, horizonY, canvas.width, canvas.height - horizonY);
+
+  // Perspective vanishing point lines (track rails)
+  const vx = canvas.width * 0.5, vy = canvas.height * 0.52;
+  ctx.save();
+  ctx.globalAlpha = 0.07;
+  ctx.strokeStyle = '#FFD700';
+  ctx.lineWidth = 1;
+  for (let r = 0; r < 5; r++) {
+    const spread = (r + 1) * 0.22;
+    ctx.beginPath();
+    ctx.moveTo(vx, vy);
+    ctx.lineTo(vx - canvas.width * spread, canvas.height);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(vx, vy);
+    ctx.lineTo(vx + canvas.width * spread, canvas.height);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Animate & draw each horse
+  for (const h of horses) {
+    h.frame = (h.frame + h.frameSpeed * dt) % 6;
+    h.x += h.speed * dt;
+    if (h.x > canvas.width + 120) {
+      h.x = -120;
+    }
+    // Dust cloud behind hooves
+    ctx.save();
+    ctx.globalAlpha = h.alpha * 0.18;
+    ctx.filter = 'blur(6px)';
+    const dustGrad = ctx.createRadialGradient(h.x - 30 * h.scale, h.y + 14 * h.scale, 0, h.x - 30 * h.scale, h.y + 14 * h.scale, 30 * h.scale);
+    dustGrad.addColorStop(0, h.palette[0]);
+    dustGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = dustGrad;
+    ctx.beginPath();
+    ctx.ellipse(h.x - 30 * h.scale, h.y + 14 * h.scale, 30 * h.scale, 14 * h.scale, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.filter = 'none';
+    ctx.restore();
+
+    drawHorse(ctx, h.x, h.y, h.scale, h.frame, h.palette, h.alpha, 1);
+  }
+
+  requestAnimationFrame(animateHorses);
+}
+requestAnimationFrame(animateHorses);
+
+// ══════════════════════════════════
+//  DUST / SPARKLE CANVAS
+// ══════════════════════════════════
+const dc = document.getElementById('dustCanvas');
+const dctx = dc.getContext('2d');
+
+function resizeDust() { dc.width = window.innerWidth; dc.height = window.innerHeight; }
+resizeDust();
+window.addEventListener('resize', resizeDust);
+
+const SPARKS = [];
+const SPARK_COLORS = ['#FFD700','#00F5FF','#FF00CC','#FF6B00','#BF5FFF','#00FF88'];
+for (let i = 0; i < 120; i++) {
+  SPARKS.push({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    r: Math.random() * 1.8 + 0.3,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: -Math.random() * 0.5 - 0.1,
+    color: SPARK_COLORS[Math.floor(Math.random() * SPARK_COLORS.length)],
+    life: Math.random(),
+    maxLife: 0.4 + Math.random() * 0.6,
+  });
+}
+
+function animateDust(ts) {
+  dctx.clearRect(0, 0, dc.width, dc.height);
+  for (const s of SPARKS) {
+    s.x += s.vx;
+    s.y += s.vy;
+    s.life -= 0.004;
+    if (s.life <= 0) {
+      s.x = Math.random() * dc.width;
+      s.y = dc.height * 0.5 + Math.random() * dc.height * 0.5;
+      s.life = s.maxLife;
+    }
+    const a = (s.life / s.maxLife) * 0.7;
+    dctx.save();
+    dctx.globalAlpha = a;
+    dctx.fillStyle = s.color;
+    dctx.shadowColor = s.color;
+    dctx.shadowBlur = 6;
+    dctx.beginPath();
+    dctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    dctx.fill();
+    dctx.restore();
+  }
+  requestAnimationFrame(animateDust);
+}
+requestAnimationFrame(animateDust);
+</script>
 </body>
 </html>
